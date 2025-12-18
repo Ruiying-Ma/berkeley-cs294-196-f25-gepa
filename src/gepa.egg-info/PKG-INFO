@@ -1,0 +1,64 @@
+Metadata-Version: 2.4
+Name: gepa
+Version: 0.0.17
+Summary: A framework for optimizing textual system components (AI prompts, code snippets, etc.) using LLM-based reflection and Pareto-efficient evolutionary search.
+Author-email: Lakshya A Agrawal <lakshyaaagrawal@berkeley.edu>
+License: MIT
+Project-URL: Homepage, https://github.com/gepa-ai/gepa
+Project-URL: Bug Tracker, https://github.com/gepa-ai/gepa/issues
+Requires-Python: <3.14,>=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: full
+Requires-Dist: litellm>=1.64.0; extra == "full"
+Requires-Dist: datasets>=2.14.6; extra == "full"
+Requires-Dist: mlflow>=3.0.0; extra == "full"
+Requires-Dist: wandb; extra == "full"
+Requires-Dist: tqdm>=4.66.1; extra == "full"
+Provides-Extra: dspy
+Provides-Extra: test
+Requires-Dist: gepa[full]; extra == "test"
+Requires-Dist: pytest; extra == "test"
+Provides-Extra: build
+Requires-Dist: setuptools>=77.0.1; extra == "build"
+Requires-Dist: wheel; extra == "build"
+Requires-Dist: build; extra == "build"
+Requires-Dist: twine; extra == "build"
+Requires-Dist: semver; extra == "build"
+Requires-Dist: packaging; extra == "build"
+Requires-Dist: requests; extra == "build"
+Provides-Extra: dev
+Requires-Dist: gepa[test]; extra == "dev"
+Requires-Dist: gepa[build]; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: build>=1.0.3; extra == "dev"
+Requires-Dist: ruff>=0.3.0; extra == "dev"
+Dynamic: license-file
+
+# GEPA Run Instruction 
+## Can't be late 
+- Reference `gepa/adapters/cant_be_late_adapter` for the GEPA can't be late example 
+
+1. **Install simulator dependencies and unpack the traces.**
+
+   ```bash
+   cd src/gepa/adapters/cant_be_late_adapter/simulator/
+   uv sync --active
+   mkdir -p data
+   [ -d data/real ] || tar -xzf real_traces.tar.gz -C data
+   mkdir -p ../../../../../exp
+   [ -d ../../../../../exp/real ] || mv data/real ../../../../../exp/real
+   ```
+
+2. **Provide the API keys required by the prompts** (either export them manually or source a `.env`).
+
+   ```bash
+   export OPENAI_API_KEY=...
+   export GEMINI_API_KEY=...
+   ```
+
+3. **Run example** 
+```
+cd ../../../../../
+uv run --extra full src/gepa/adapters/cant_be_late_adapter/example.py
+```
